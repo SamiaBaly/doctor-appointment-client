@@ -1,8 +1,7 @@
-const ProfilePage=()=>{
-  return (
-    <div>
-      <h1 className="text-2xl font-bold">My Profile</h1>
-    </div>
-  );
-}
+import MyProfile from '@/componants/MyProfile';
+
+const ProfilePage = () => {
+  return <MyProfile />;
+};
+
 export default ProfilePage;

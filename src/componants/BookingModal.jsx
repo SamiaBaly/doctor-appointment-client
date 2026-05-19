@@ -1,18 +1,23 @@
 'use client';
 
+import React, { useState } from 'react';
 import { authClient } from '@/lib/auth-client';
-import { Envelope } from '@gravity-ui/icons';
-import { Button, Input, Modal } from '@heroui/react';
+import { Button, Input } from '@heroui/react';
+import toast from 'react-hot-toast';
 
 const BookingModal = ({ doctor }) => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  const handleSubmit =async (e) => {
+
+  const [open, setOpen] = useState(false);
+
+  const handleSubmit = async e => {
     e.preventDefault();
 
     const form = new FormData(e.target);
 
     const data = {
+      userId: user?.id,
       userEmail: user?.email,
       doctorName: doctor?.name,
       patientName: form.get('patientName'),
@@ -23,191 +28,120 @@ const BookingModal = ({ doctor }) => {
       reason: form.get('reason'),
     };
 
-    console.log(data);
+    if (
+      !data.patientName ||
+      !data.gender ||
+      !data.phone ||
+      !data.date ||
+      !data.time ||
+      !data.reason
+    ) {
+      toast.error('Please fill all fields ❗');
+      return;
+    }
 
-    const res = await fetch('http://localhost:6001/booking', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      
-      body: JSON.stringify(data),
-    });
-    const booking = await res.json()
-  console.log(booking);
+    try {
+      const res = await fetch('http://localhost:6001/booking', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (result?.acknowledged) {
+        toast.success('Booked Successfully 🎉');
+
+        e.target.reset();
+
+        setOpen(false);
+
+        return;
+      }
+
+      toast.error('Booking failed ❌');
+    } catch (error) {
+      console.log(error);
+
+      toast.error('Something went wrong ⚠️');
+    }
   };
 
   return (
-    <Modal>
-      {/* Trigger Button */}
-      <Modal.Trigger className="w-full">
-        <Button className="mt-8 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 font-medium text-lg transition rounded-none">
-          Book Appointment
-        </Button>
-      </Modal.Trigger>
+    <div>
+      {/* Open Button */}
+      <Button
+        onClick={() => setOpen(true)}
+        className="w-full mt-6 bg-blue-600 text-white rounded-none"
+      >
+        Book Appointment
+      </Button>
 
       {/* Modal */}
-      <Modal.Backdrop>
-        <Modal.Container placement="center">
-          <Modal.Dialog className="sm:max-w-2xl rounded-2xl bg-white">
-            <Modal.CloseTrigger />
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white w-full max-w-2xl rounded-2xl p-6 relative">
+            {/* Close Button */}
+            <button
+              onClick={() => setOpen(false)}
+              className="absolute top-3 right-4 text-2xl"
+            >
+              ×
+            </button>
 
-            {/* Header */}
-            <Modal.Header className="pb-2">
-              <div className="flex items-start gap-3">
-                <div>
-                  <Modal.Heading className="text-2xl font-bold text-gray-800">
-                    Book Appointment
-                  </Modal.Heading>
+            <h2 className="text-2xl font-bold mb-1">Book Appointment</h2>
 
-                  <p className="text-sm text-gray-500 mt-1">
-                    with Dr. {doctor?.name}
-                  </p>
-                </div>
-              </div>
-            </Modal.Header>
+            <p className="text-gray-500 mb-5">with {doctor?.name}</p>
 
-            {/* Body */}
-            <Modal.Body className="p-6">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* User Email */}
-                <div>
-                  <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                    User Email
-                  </label>
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input value={user?.email || ''} readOnly label="User Email" />
 
-                  <Input
-                    value={user?.email || ''}
-                    readOnly
-                    classNames={{
-                      inputWrapper:
-                        'bg-slate-100 border border-slate-200 shadow-none',
-                    }}
-                  />
-                </div>
+              <Input value={doctor?.name || ''} readOnly label="Doctor Name" />
 
-                {/* Doctor Name */}
-                <div>
-                  <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                    Doctor Name
-                  </label>
+              <Input
+                name="patientName"
+                placeholder="Patient Name"
+                label="Patient Name"
+              />
 
-                  <Input
-                    value={doctor?.name || ''}
-                    readOnly
-                    classNames={{
-                      inputWrapper:
-                        'bg-slate-100 border border-slate-200 shadow-none',
-                    }}
-                  />
-                </div>
+              <select
+                name="gender"
+                defaultValue=""
+                className="w-full border rounded-xl h-12 px-3"
+              >
+                <option value="" disabled>
+                  Select Gender
+                </option>
 
-                {/* Patient Name */}
-                <div>
-                  <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                    Patient Name *
-                  </label>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+              </select>
 
-                  <Input
-                    name="patientName"
-                    placeholder="Enter patient name"
-                    classNames={{
-                      inputWrapper: 'border border-slate-200 shadow-none',
-                    }}
-                  />
-                </div>
+              <Input name="phone" placeholder="Phone Number" label="Phone" />
 
-                {/* Gender + Phone */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                      Gender *
-                    </label>
+              <Input name="date" type="date" label="Date" />
 
-                    <select
-                      name="gender"
-                      className="w-full h-12 px-3 rounded-xl border border-slate-200 outline-none focus:border-cyan-500"
-                    >
-                      <option>Female</option>
-                      <option>Male</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
+              <Input name="time" type="time" label="Time" />
 
-                  <div>
-                    <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                      Phone *
-                    </label>
+              <textarea
+                name="reason"
+                rows={4}
+                placeholder="Enter reason"
+                className="w-full border rounded-xl p-3"
+              />
 
-                    <Input
-                      name="phone"
-                      placeholder="017XXXXXXXX"
-                      classNames={{
-                        inputWrapper:
-                          'border border-slate-200 shadow-none focus-within:border-cyan-500',
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Date + Time */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                      Date *
-                    </label>
-
-                    <Input
-                      name="date"
-                      type="date"
-                      classNames={{
-                        inputWrapper: 'border border-slate-200 shadow-none',
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                      Time *
-                    </label>
-
-                    <Input
-                      name="time"
-                      type="time"
-                      classNames={{
-                        inputWrapper: 'border border-slate-200 shadow-none',
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Reason */}
-                <div>
-                  <label className="text-sm font-semibold text-gray-700 mb-1 block">
-                    Reason (optional)
-                  </label>
-
-                  <textarea
-                    name="reason"
-                    rows={3}
-                    placeholder="Brief reason for visit"
-                    className="w-full rounded-xl border border-slate-200 p-3 outline-none focus:border-cyan-500"
-                  />
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="mt-8 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 font-medium text-lg transition rounded-none"
-                >
-                  Confirm Booking
-                </button>
-              </form>
-            </Modal.Body>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+              <Button type="submit" className="w-full bg-blue-600 text-white">
+                Confirm Booking
+              </Button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

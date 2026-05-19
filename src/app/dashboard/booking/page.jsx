@@ -1,8 +1,12 @@
-const BookingPage=()=> {
+import MyBooking from '@/componants/MyBooking';
+
+const BookingPage = () => {
+  
   return (
     <div>
-      <h1 className="text-2xl font-bold">My Bookings</h1>
+      <MyBooking />
     </div>
   );
-}
+};
+
 export default BookingPage;
