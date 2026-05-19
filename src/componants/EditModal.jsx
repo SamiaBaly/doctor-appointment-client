@@ -28,7 +28,6 @@ const EditModal = ({ booking }) => {
 
     const data = await res.json();
     
-
     if (data.modifiedCount === 0) {
         toast.error('You are not added data');
     } else {
