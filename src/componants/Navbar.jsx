@@ -16,9 +16,9 @@ const Navbar = () => {
       data: session,
      
   } = authClient.useSession(); 
-  // console.log(session);
+  
   const user = session?.user
-    // console.log(user);
+   
 
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +27,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await authClient.signOut();
-    // router.push('/login');
+  
   };
   const navLinks = [
     { name: 'Home', path: '/' },
