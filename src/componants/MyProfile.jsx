@@ -113,7 +113,7 @@ const MyProfile = () => {
             onClick={() => setIsEditing(true)}
             className="w-full bg-blue-600 text-white py-3 rounded-lg"
           >
-            Edit Profile
+           Update Profile
           </button>
         ) : (
           <button
