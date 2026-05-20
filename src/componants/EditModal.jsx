@@ -49,7 +49,7 @@ const EditModal = ({ booking }) => {
 
   return (
     <Modal open={open} onOpenChange={setOpen}>
-      {/* EDIT BUTTON */}
+     
       <Button
         onClick={() => setOpen(true)}
         variant="outline"
