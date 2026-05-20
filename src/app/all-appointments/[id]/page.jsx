@@ -1,13 +1,22 @@
 
 import BookingModal from '@/componants/BookingModal';
+import { auth } from '@/lib/auth';
 import { Star, MapPin, Briefcase, Building2 } from 'lucide-react';
+import { headers } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const DoctorDetailsPage = async ({ params }) => {
   const { id } = await params;
+  const {token} = await auth.api.getToken({
+    headers: await headers()
+  })
+ 
 
   const res = await fetch(`http://localhost:6001/appointments/${id}`, {
+    headers: {
+      authorization:`Bearer ${token}`
+    },
     cache: 'no-store',
   });
 

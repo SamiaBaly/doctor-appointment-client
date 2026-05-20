@@ -74,6 +74,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-2">
             {user ? (
               <>
+                <h2 className="text-xl font-bold mr-2">{user?.name}</h2>
                 <Image
                   src={user?.image || '/avatar.png'}
                   width={50}

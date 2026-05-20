@@ -1,6 +1,7 @@
 'use client';
 
 import DoctorCard from '@/componants/DoctorCard';
+import { authClient } from '@/lib/auth-client';
 import { useEffect, useState } from 'react';
 
 const AllApointments = () => {
@@ -11,8 +12,12 @@ const AllApointments = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       setLoading(true);
-
-      const res = await fetch('http://localhost:6001/appointments');
+      const { data: tokenData } = await authClient.token();
+      const res = await fetch('http://localhost:6001/appointments', {
+        headers: {
+          authorization: `Bearer ${tokenData?.token}`,
+        },
+      });
       const data = await res.json();
 
       setDoctors(data);

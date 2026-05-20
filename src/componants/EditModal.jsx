@@ -4,12 +4,16 @@ import { useState } from 'react';
 import { Button, Input, Label, Modal, Surface, TextField } from '@heroui/react';
 import { FaSquarePen } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
-import { redirect } from 'next/navigation';
+
+
+import { authClient } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 const EditModal = ({ booking }) => {
   const [open, setOpen] = useState(false);
+    const router = useRouter();
 
-  const { _id, time, reason, patientName, doctorName, date } = booking || {};
+  const { _id, time, reason, patientName, doctorName, date } = booking;
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -17,33 +21,37 @@ const EditModal = ({ booking }) => {
     const formData = new FormData(e.currentTarget);
     const updatedData = Object.fromEntries(formData.entries());
 
-   
+    const { data: tokenData } = await authClient.token();
+   console.log(tokenData);
       const res = await fetch(`http://localhost:6001/booking/${_id}`, {
         method: 'PATCH',
         headers: {
           'content-type': 'application/json',
+          authorization: `Bearer ${tokenData?.token}`,
         },
         body: JSON.stringify(updatedData), // ✅ FIXED
       });
 
     const data = await res.json();
+    console.log(data);
     
     if (data.modifiedCount === 0) {
         toast.error('You are not added data');
     } else {
   
         toast.success('Update succefully');
-        redirect('/dashboard/booking');
+        setOpen(false)
+        router.push('/dashboard/booking');
+      router.refresh();
     }
     
   };
 
   return (
-    <Modal>
+    <Modal open={open} onOpenChange={setOpen}>
       {/* EDIT BUTTON */}
       <Button
         onClick={() => setOpen(true)}
-        
         variant="outline"
         className="flex-1 border border-blue-600 text-blue-600 rounded-xl py-2 flex items-center justify-center gap-2 hover:bg-blue-600 hover:text-white transition"
       >
@@ -54,7 +62,7 @@ const EditModal = ({ booking }) => {
       <Modal.Backdrop>
         <Modal.Container placement="center">
           <Modal.Dialog className="sm:max-w-md">
-            <Modal.CloseTrigger/>  
+            <Modal.CloseTrigger />
 
             <Modal.Header>
               <Modal.Heading>Update Booking</Modal.Heading>
@@ -95,6 +103,7 @@ const EditModal = ({ booking }) => {
                   <Button
                     type="submit"
                     slot={"close"}
+                  
                     className="w-full bg-blue-600 text-white rounded-none"
                   >
                     Update

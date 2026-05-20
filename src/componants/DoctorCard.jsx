@@ -20,15 +20,15 @@ const DoctorCard = ({ doctor }) => {
     <div className="bg-white border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden w-full max-w-sm">
       <div className="relative overflow-hidden group rounded-2xl p-2">
         <Image
-          src={image}
-          alt={name}
+          src={image || 'https://i.ibb.co/4pDNDk1/avatar.png'}
+          alt={name || 'Doctor'}
           width={450}
           height={400}
-          className="w-full rounded-none aspect-square object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+          className="w-full h-auto rounded-none aspect-square object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
         />
 
         <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1  shadow-sm text-sm font-medium text-gray-800">
-          ⭐ {rating.toFixed(1)}
+          ⭐ {Number(rating || 0).toFixed(1)}
         </div>
       </div>
 
