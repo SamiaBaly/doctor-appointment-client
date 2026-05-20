@@ -74,9 +74,9 @@ const EditModal = ({ booking }) => {
 
                 <p className="text-2xl font-bold mb-5">{doctorName}</p>
 
-                {/* FORM */}
+              
                 <form onSubmit={onSubmit} className="flex flex-col gap-4">
-                  {/* Patient Name */}
+                 
                   <TextField name="patientName" defaultValue={patientName}>
                     <Label>Patient Name</Label>
                     <Input />
