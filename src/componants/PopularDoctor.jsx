@@ -2,7 +2,7 @@ import DoctorCard from './DoctorCard';
 import { headers } from 'next/headers';
 
 const PopularDoctor = async () => {
-  const res = await fetch('http://localhost:6001/appointments');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/appointments`);
   const topDoctors = await res.json();
 
   return (
@@ -14,9 +14,9 @@ const PopularDoctor = async () => {
           Book appointments with our top-rated and experienced doctors.
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {
-          topDoctors.slice(0,3).map(doctor => (
+          topDoctors.slice(0,4).map(doctor => (
             <DoctorCard key={doctor._id} doctor={doctor} />
           ))
         }

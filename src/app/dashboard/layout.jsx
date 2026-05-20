@@ -1,6 +1,11 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function DashboardLayout({ children }) {
+  const pathname = usePathname();
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -14,16 +19,26 @@ export default function DashboardLayout({ children }) {
 
           {/* Navigation */}
           <div className="flex gap-8 mt-6">
+            {/* Booking */}
             <Link
               href="/dashboard/booking"
-              className="font-medium text-cyan-700 border-b-2 border-cyan-700 pb-2"
+              className={`font-medium pb-2 border-b-2 transition-all duration-200 ${
+                pathname === '/dashboard/booking'
+                  ? 'text-cyan-700 border-cyan-700'
+                  : 'text-gray-500 border-transparent hover:text-cyan-700'
+              }`}
             >
               My Booking
             </Link>
 
+            {/* Profile */}
             <Link
               href="/dashboard/profile"
-              className="font-medium text-gray-500 hover:text-cyan-700 pb-2"
+              className={`font-medium pb-2 border-b-2 transition-all duration-200 ${
+                pathname === '/dashboard/profile'
+                  ? 'text-cyan-700 border-cyan-700'
+                  : 'text-gray-500 border-transparent hover:text-cyan-700'
+              }`}
             >
               My Profile
             </Link>

@@ -43,11 +43,11 @@ const BookingModal = ({ doctor }) => {
     try {
       const { data: tokenData } = await authClient.token();
       console.log(tokenData);
-      const res = await fetch('http://localhost:6001/booking', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          authorization:`Bearer ${tokenData?.token}`
+          authorization: `Bearer ${tokenData?.token}`,
         },
         body: JSON.stringify(data),
       });

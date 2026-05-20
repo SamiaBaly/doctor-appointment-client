@@ -1,4 +1,3 @@
-
 import BookingModal from '@/componants/BookingModal';
 import { auth } from '@/lib/auth';
 import { Star, MapPin, Briefcase, Building2 } from 'lucide-react';
@@ -6,19 +5,50 @@ import { headers } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const DoctorDetailsPage = async ({ params }) => {
-  const { id } = await params;
-  const {token} = await auth.api.getToken({
-    headers: await headers()
-  })
- 
+// ✅ Metadata (must be outside component)
+export async function generateMetadata({ params }) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/appointments/${params.id}`,
+    { cache: 'no-store' },
+  );
 
-  const res = await fetch(`http://localhost:6001/appointments/${id}`, {
-    headers: {
-      authorization:`Bearer ${token}`
+  const doctor = await res.json();
+
+  if (!doctor) {
+    return {
+      title: 'Doctor Not Found',
+      description: 'Requested doctor details not found',
+    };
+  }
+
+  return {
+    title: `${doctor.name} | Doctor Details`,
+    description: doctor.description,
+    openGraph: {
+      title: doctor.name,
+      description: doctor.description,
+      images: [doctor.image],
     },
-    cache: 'no-store',
+  };
+}
+
+// ✅ Page Component
+const DoctorDetailsPage = async ({ params }) => {
+  const { id } = params;
+
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
   });
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/appointments/${id}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      cache: 'no-store',
+    },
+  );
 
   const doctor = await res.json();
 
