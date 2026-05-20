@@ -14,9 +14,7 @@ const Navbar = () => {
   
     const {
       data: session,
-      isPending, 
-      error, 
-      refetch,
+     
   } = authClient.useSession(); 
   // console.log(session);
   const user = session?.user
