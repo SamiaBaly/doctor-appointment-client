@@ -69,5 +69,4 @@ const AllApointments = () => {
     </div>
   );
 };
-
 export default AllApointments;
