@@ -97,16 +97,15 @@ const DoctorDetailsPage = async ({ params }) => {
             </div>
           </div>
 
-          <div className="mt-6">
-            <span
-              className={`inline-block text-xs px-3 py-1 rounded-full font-medium ${
-                doctor.availability === 'Available'
-                  ? 'bg-green-100 text-green-600'
-                  : 'bg-red-100 text-red-600'
-              }`}
-            >
-              {doctor.availability}
-            </span>
+          <div className="flex flex-wrap gap-2">
+            {doctor.availability.map((time, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 bg-blue-50 text-blue-700  text-sm mt-4"
+              >
+                {time}
+              </span>
+            ))}
           </div>
 
           <BookingModal doctor={doctor} />

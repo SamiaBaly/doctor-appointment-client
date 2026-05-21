@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { authClient } from '@/lib/auth-client';
 import { Button, Input } from '@heroui/react';
 import toast from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const BookingModal = ({ doctor }) => {
   const { data: session } = authClient.useSession();
@@ -42,7 +43,7 @@ const BookingModal = ({ doctor }) => {
 
     try {
       const { data: tokenData } = await authClient.token();
-      console.log(tokenData);
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
         method: 'POST',
         headers: {
@@ -56,25 +57,20 @@ const BookingModal = ({ doctor }) => {
 
       if (result?.acknowledged) {
         toast.success('Booked Successfully 🎉');
-
         e.target.reset();
-
         setOpen(false);
-
         return;
       }
 
       toast.error('Booking failed ❌');
     } catch (error) {
       console.log(error);
-
       toast.error('Something went wrong ⚠️');
     }
   };
 
   return (
     <div>
-      {/* Open Button */}
       <Button
         onClick={() => setOpen(true)}
         className="w-full mt-6 bg-blue-600 text-white rounded-none"
@@ -82,68 +78,108 @@ const BookingModal = ({ doctor }) => {
         Book Appointment
       </Button>
 
-      {/* Modal */}
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white w-full max-w-2xl rounded-2xl p-6 relative">
-            {/* Close Button */}
-            <button
-              onClick={() => setOpen(false)}
-              className="absolute top-3 right-4 text-2xl"
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ y: 80, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 80, opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="bg-white w-full max-w-2xl rounded-2xl p-6 relative"
             >
-              ×
-            </button>
-
-            <h2 className="text-2xl font-bold mb-1">Book Appointment</h2>
-
-            <p className="text-gray-500 mb-5">with {doctor?.name}</p>
-
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <Input value={user?.email || ''} readOnly label="User Email" />
-
-              <Input value={doctor?.name || ''} readOnly label="Doctor Name" />
-
-              <Input
-                name="patientName"
-                placeholder="Patient Name"
-                label="Patient Name"
-              />
-
-              <select
-                name="gender"
-                defaultValue=""
-                className="w-full border rounded-xl h-12 px-3"
+              <button
+                onClick={() => setOpen(false)}
+                className="absolute top-3 right-4 text-2xl"
               >
-                <option value="" disabled>
-                  Select Gender
-                </option>
+                ×
+              </button>
 
-                <option value="Female">Female</option>
-                <option value="Male">Male</option>
-                <option value="Other">Other</option>
-              </select>
+              <h2 className="text-2xl font-bold mb-1">Book Appointment</h2>
 
-              <Input name="phone" placeholder="Phone Number" label="Phone" />
+              <p className="text-gray-500 mb-5">with {doctor?.name}</p>
 
-              <Input name="date" type="date" label="Date" />
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="flex md:justify-between items-center flex-col space-y-1">
+                  <Input
+                    value={user?.email || ''}
+                    readOnly
+                    label="User Email"
+                    className={'w-full'}
+                  />
 
-              <Input name="time" type="time" label="Time" />
+                  <Input
+                    value={doctor?.name || ''}
+                    readOnly
+                    label="Doctor Name"
+                    className={'w-full font-bold text-md mx-2'}
+                  />
+                </div>
 
-              <textarea
-                name="reason"
-                rows={4}
-                placeholder="Enter reason"
-                className="w-full border rounded-xl p-3"
-              />
+                <Input
+                  name="patientName"
+                  placeholder="Patient Name"
+                  label="Patient Name"
+                  className={'w-full'}
+                />
 
-              <Button type="submit" className="w-full bg-blue-600 text-white">
-                Confirm Booking
-              </Button>
-            </form>
-          </div>
-        </div>
-      )}
+                <select
+                  name="gender"
+                  defaultValue=""
+                  className="w-full border rounded-xl h-12 px-3"
+                >
+                  <option value="" disabled>
+                    Select Gender
+                  </option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Other">Other</option>
+                </select>
+
+                <div className="flex flex-col space-y-1 md:justify-between">
+                  <Input
+                    name="phone"
+                    placeholder="Phone Number"
+                    label="Phone"
+                    className={'w-full mx-2'}
+                  />
+
+                  <Input
+                    name="date"
+                    type="date"
+                    label="Date"
+                    className={'w-full mx-2'}
+                  />
+
+                  <Input
+                    name="time"
+                    type="time"
+                    label="Time"
+                    className={'w-full mx-2'}
+                  />
+                </div>
+
+                <textarea
+                  name="reason"
+                  rows={4}
+                  placeholder="Enter reason"
+                  className="w-full border rounded-xl p-3"
+                />
+
+                <Button type="submit" className="w-full bg-blue-600 text-white">
+                  Confirm Booking
+                </Button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

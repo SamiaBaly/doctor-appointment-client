@@ -49,15 +49,16 @@ const DoctorCard = ({ doctor }) => {
 
           <span className="font-bold text-gray-800">${fee}</span>
         </div>
-        <span
-          className={`inline-block mt-2 text-xs px-3 py-1 rounded-full font-medium ${
-            availability === 'Available'
-              ? 'bg-green-100 text-green-600'
-              : 'bg-red-100 text-red-600'
-          }`}
-        >
-          {availability}
-        </span>
+        <div className="flex flex-wrap gap-2">
+          {doctor.availability.map((time, index) => (
+            <span
+              key={index}
+              className="px-3 py-1 bg-blue-50 text-blue-700 mt-2 text-sm"
+            >
+              {time}
+            </span>
+          ))}
+        </div>
 
         <p className="text-sm text-gray-500 mt-3 line-clamp-2">{description}</p>
 
