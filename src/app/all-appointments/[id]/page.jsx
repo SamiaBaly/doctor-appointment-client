@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const DoctorDetailsPage = async ({ params }) => {
-  const { id } = params;
+  const { id } =await params;
 
   const { token } = await auth.api.getToken({
     headers: await headers(),
@@ -48,6 +48,7 @@ const DoctorDetailsPage = async ({ params }) => {
             width={600}
             height={600}
             className="w-full h-[500px] object-cover"
+            loading="eager"
           />
 
           <div className="absolute top-4 left-4 bg-white/90 px-3 py-1 rounded-full flex items-center gap-1 text-sm font-medium">
