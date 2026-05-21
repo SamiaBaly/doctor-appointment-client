@@ -56,16 +56,16 @@ const BookingModal = ({ doctor }) => {
       const result = await res.json();
 
       if (result?.acknowledged) {
-        toast.success('Booked Successfully 🎉');
+        toast.success('Booked Successfully');
         e.target.reset();
         setOpen(false);
         return;
       }
 
-      toast.error('Booking failed ❌');
+      toast.error('Booking failed ');
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong ⚠️');
+      toast.error('Something went wrong ');
     }
   };
 

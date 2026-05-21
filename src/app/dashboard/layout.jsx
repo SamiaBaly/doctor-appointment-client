@@ -8,7 +8,6 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <div className="bg-white border-b">
         <div className="container mx-auto px-6 py-5">
           <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
@@ -17,9 +16,7 @@ export default function DashboardLayout({ children }) {
             Manage your account and appointments
           </p>
 
-          {/* Navigation */}
           <div className="flex gap-8 mt-6">
-            {/* Booking */}
             <Link
               href="/dashboard/booking"
               className={`font-medium pb-2 border-b-2 transition-all duration-200 ${
@@ -31,7 +28,6 @@ export default function DashboardLayout({ children }) {
               My Booking
             </Link>
 
-            {/* Profile */}
             <Link
               href="/dashboard/profile"
               className={`font-medium pb-2 border-b-2 transition-all duration-200 ${
@@ -46,7 +42,6 @@ export default function DashboardLayout({ children }) {
         </div>
       </div>
 
-      {/* Page Content */}
       <div className="container mx-auto px-6 py-8">{children}</div>
     </div>
   );

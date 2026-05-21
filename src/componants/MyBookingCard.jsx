@@ -9,16 +9,13 @@ import {
 import EditModal from './EditModal';
 import DeleteAlert from './DeleteAlart';
 
-
 const MyBookingCard = ({ booking }) => {
   return (
     <div className="bg-white border rounded-2xl p-5 shadow-sm hover:shadow-md transition">
-      {/* Doctor */}
       <h2 className="text-lg font-bold text-blue-600 mb-3">
         {booking.doctorName}
       </h2>
 
-      {/* Info */}
       <div className="space-y-2 text-sm text-gray-600">
         <div className="flex items-center gap-2">
           <User size={16} />
@@ -35,7 +32,6 @@ const MyBookingCard = ({ booking }) => {
           <span>Time: {booking.time}</span>
         </div>
 
-        {/* Reason */}
         <div className="flex items-start gap-2">
           <FileText size={16} className="mt-1 text-purple-500" />
           <span className="font-bold text-cyan-800">
@@ -45,7 +41,6 @@ const MyBookingCard = ({ booking }) => {
         </div>
       </div>
 
-      {/* Buttons */}
       <div className="flex gap-3 mt-5">
         <EditModal booking={booking}></EditModal>
 

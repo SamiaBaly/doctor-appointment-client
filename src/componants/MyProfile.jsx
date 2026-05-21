@@ -22,7 +22,7 @@ const MyProfile = () => {
     image: '',
   });
 
-  // ✅ session load হলে auto fill
+  
   useEffect(() => {
     if (sessionUser) {
       const data = {
@@ -53,7 +53,7 @@ const MyProfile = () => {
       <div className="w-full max-w-md bg-white shadow-lg p-8">
         <h1 className="text-2xl font-bold text-center mb-6">My Profile</h1>
 
-        {/* IMAGE */}
+      
         <div className="flex flex-col items-center mb-6">
           <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center">
             {user.image ? (
@@ -81,7 +81,7 @@ const MyProfile = () => {
           )}
         </div>
 
-        {/* NAME */}
+       
         {!isEditing ? (
           <p className="text-center text-lg font-semibold mb-2">{user.name}</p>
         ) : (
@@ -94,7 +94,7 @@ const MyProfile = () => {
           />
         )}
 
-        {/* EMAIL */}
+      
         {!isEditing ? (
           <p className="text-center text-gray-600 mb-5">{user.email}</p>
         ) : (
@@ -107,7 +107,7 @@ const MyProfile = () => {
           />
         )}
 
-        {/* BUTTON */}
+    
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}

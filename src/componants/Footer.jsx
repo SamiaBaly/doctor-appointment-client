@@ -13,9 +13,7 @@ const Footer = () => {
   return (
     <footer className="bg-slate-900 text-white mt-16">
       <div className="container mx-auto px-4 py-12">
-        {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Logo & Description */}
           <div>
             <Image
               src={logo2}
@@ -30,7 +28,6 @@ const Footer = () => {
               modern medical technology for better patient care.
             </p>
 
-            {/* Social Icons */}
             <div className="flex gap-4 mt-6">
               <Link
                 href="/"
@@ -62,7 +59,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h2 className="text-2xl font-bold mb-5">Quick Links</h2>
 
@@ -93,7 +89,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h2 className="text-2xl font-bold mb-5">Contact Info</h2>
 
@@ -107,7 +102,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom */}
         <div className="border-t border-slate-700 mt-10 pt-6 text-center text-gray-500">
           <p>© 2026 DocApp. All Rights Reserved.</p>
         </div>

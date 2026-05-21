@@ -9,25 +9,16 @@ import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { authClient } from '@/lib/auth-client';
 
-
 const Navbar = () => {
-  
-    const {
-      data: session,
-     
-  } = authClient.useSession(); 
-  
-  const user = session?.user
-   
+  const { data: session } = authClient.useSession();
+
+  const user = session?.user;
 
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  
-
   const handleLogout = async () => {
     await authClient.signOut();
-  
   };
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -39,7 +30,6 @@ const Navbar = () => {
     <div className="shadow-md bg-white">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          {/* LOGO */}
           <Image
             src={logo}
             height={150}
@@ -48,7 +38,6 @@ const Navbar = () => {
             className="w-[120px] md:w-[150px]"
           />
 
-          {/* DESKTOP NAV */}
           <div className="hidden md:block">
             <ul className="flex items-center gap-6 text-sky-900 font-semibold">
               {navLinks.map(link => (
@@ -68,17 +57,13 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* AUTH BUTTONS (DESKTOP) */}
           <div className="hidden md:flex items-center gap-2">
             {user ? (
               <>
                 <h2 className="text-xl font-bold mr-2">{user?.name}</h2>
                 <Avatar>
-                  <Avatar.Image
-                    alt="John Doe"
-                    src={user?.image}
-                  />
-                  <Avatar.Fallback>{ user?.name.charAt(0)}</Avatar.Fallback>
+                  <Avatar.Image alt="John Doe" src={user?.image} />
+                  <Avatar.Fallback>{user?.name.charAt(0)}</Avatar.Fallback>
                 </Avatar>
 
                 <Button
@@ -108,13 +93,11 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* MOBILE MENU */}
           <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
-        {/* MOBILE DROPDOWN */}
         {isOpen && (
           <div className="md:hidden pb-4">
             <ul className="flex flex-col gap-4 text-sky-900 font-semibold">

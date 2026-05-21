@@ -6,7 +6,7 @@ import { Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-const DeleteAlert=({ booking }) =>{
+const DeleteAlert = ({ booking }) => {
   const router = useRouter();
 
   const { _id, doctorName } = booking || {};
@@ -28,10 +28,10 @@ const DeleteAlert=({ booking }) =>{
       const data = await res.json();
 
       if (data.deletedCount > 0) {
-        toast.success('Deleted successfully 🗑️');
+        toast.success('Deleted successfully ');
         router.refresh(); // 🔥 best way in Next.js
       } else {
-        toast.error('Delete failed ❌');
+        toast.error('Delete failed ');
       }
     } catch (error) {
       toast.error('Something went wrong ⚠️');
@@ -40,7 +40,6 @@ const DeleteAlert=({ booking }) =>{
 
   return (
     <AlertDialog>
-      {/* TRIGGER BUTTON (ONLY OPEN DIALOG) */}
       <AlertDialog.Trigger>
         <Button className="flex-1 bg-red-100 text-black rounded-xl py-2 flex items-center justify-center gap-2 hover:bg-red-600 hover:text-white transition">
           <Trash2 size={16} />
@@ -72,7 +71,6 @@ const DeleteAlert=({ booking }) =>{
                 Cancel
               </Button>
 
-              {/* REAL DELETE BUTTON */}
               <Button onPress={handleDelete} variant="danger">
                 Delete
               </Button>
@@ -82,5 +80,5 @@ const DeleteAlert=({ booking }) =>{
       </AlertDialog.Backdrop>
     </AlertDialog>
   );
-}
+};
 export default DeleteAlert;

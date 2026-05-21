@@ -19,9 +19,6 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 
-
-
-
 const LoginPage = () => {
   const router = useRouter();
 
@@ -65,21 +62,18 @@ const LoginPage = () => {
             <div className="absolute inset-0 bg-black/40" />
           </div>
 
-          {/* FORM */}
           <div className="p-8 space-y-4">
             <Image src={logo} height={90} width={90} alt="logo" />
 
             <h1 className="text-2xl font-bold">Login Account</h1>
 
             <form onSubmit={onSubmit} className="space-y-3">
-              {/* EMAIL */}
               <TextField isRequired name="email" type="email">
                 <Label>Email</Label>
                 <Input placeholder="john@example.com" />
                 <FieldError />
               </TextField>
 
-              {/* PASSWORD */}
               <TextField isRequired name="password" type="password">
                 <Label>Password</Label>
                 <Input placeholder="••••••••" />
@@ -94,12 +88,10 @@ const LoginPage = () => {
               </Button>
             </form>
 
-            {/* DIVIDER */}
             <div className="flex items-center gap-2 text-center">
               <Separator />
             </div>
 
-            {/* GOOGLE */}
             <Button
               onClick={handleGoogle}
               variant="bordered"
@@ -109,7 +101,6 @@ const LoginPage = () => {
               Continue with Google
             </Button>
 
-            {/* REGISTER LINK */}
             <p className="text-center text-sm text-gray-500">
               Don’t have an account?{' '}
               <span

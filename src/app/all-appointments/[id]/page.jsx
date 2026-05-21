@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const DoctorDetailsPage = async ({ params }) => {
-  const { id } =await params;
+  const { id } = await params;
 
   const { token } = await auth.api.getToken({
     headers: await headers(),
@@ -32,7 +32,6 @@ const DoctorDetailsPage = async ({ params }) => {
     );
   }
 
-  // ✅ SAFE IMAGE FIX (IMPORTANT)
   const imageUrl =
     typeof doctor?.image === 'string' && doctor.image.trim() !== ''
       ? doctor.image

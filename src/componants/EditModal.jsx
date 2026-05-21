@@ -5,13 +5,12 @@ import { Button, Input, Label, Modal, Surface, TextField } from '@heroui/react';
 import { FaSquarePen } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
 
-
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 
 const EditModal = ({ booking }) => {
   const [open, setOpen] = useState(false);
-    const router = useRouter();
+  const router = useRouter();
 
   const { _id, time, reason, patientName, doctorName, date } = booking;
 
@@ -22,37 +21,34 @@ const EditModal = ({ booking }) => {
     const updatedData = Object.fromEntries(formData.entries());
 
     const { data: tokenData } = await authClient.token();
-   console.log(tokenData);
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${_id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'content-type': 'application/json',
-            authorization: `Bearer ${tokenData?.token}`,
-          },
-          body: JSON.stringify(updatedData), // ✅ FIXED
+    console.log(tokenData);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${_id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+          authorization: `Bearer ${tokenData?.token}`,
         },
-      );
+        body: JSON.stringify(updatedData), // ✅ FIXED
+      },
+    );
 
     const data = await res.json();
     console.log(data);
-    
+
     if (data.modifiedCount === 0) {
-        toast.error('You are not added data');
+      toast.error('You are not added data');
     } else {
-  
-        toast.success('Update succefully');
-        setOpen(false)
-        router.push('/dashboard/booking');
+      toast.success('Update succefully');
+      setOpen(false);
+      router.push('/dashboard/booking');
       router.refresh();
     }
-    
   };
 
   return (
     <Modal open={open} onOpenChange={setOpen}>
-     
       <Button
         onClick={() => setOpen(true)}
         variant="outline"
@@ -77,9 +73,7 @@ const EditModal = ({ booking }) => {
 
                 <p className="text-2xl font-bold mb-5">{doctorName}</p>
 
-              
                 <form onSubmit={onSubmit} className="flex flex-col gap-4">
-                 
                   <TextField name="patientName" defaultValue={patientName}>
                     <Label>Patient Name</Label>
                     <Input />
@@ -105,8 +99,7 @@ const EditModal = ({ booking }) => {
 
                   <Button
                     type="submit"
-                    slot={"close"}
-                  
+                    slot={'close'}
                     className="w-full bg-blue-600 text-white rounded-none"
                   >
                     Update

@@ -60,13 +60,11 @@ const RegisterPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-100 px-4">
       <Card className="w-full max-w-4xl shadow-xl rounded-2xl overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* IMAGE */}
           <div className="relative hidden md:block">
             <Image src={doctor2} alt="Doctor" fill className="object-cover" />
             <div className="absolute inset-0 bg-black/40" />
           </div>
 
-          {/* FORM */}
           <div className="p-8 space-y-4">
             <Image src={logo} height={80} width={80} alt="logo" />
 
@@ -75,7 +73,6 @@ const RegisterPage = () => {
               Register to book doctor appointments
             </p>
 
-            {/* GOOGLE */}
             <Button
               onClick={handleGoogle}
               variant="bordered"
@@ -85,7 +82,6 @@ const RegisterPage = () => {
               Continue with Google
             </Button>
 
-            {/* OR */}
             <div className="flex items-center gap-2">
               <Separator />
               <p className="text-xs text-gray-400">OR</p>
@@ -93,35 +89,30 @@ const RegisterPage = () => {
             </div>
 
             <form onSubmit={onSubmit} className="space-y-3">
-              {/* NAME */}
               <TextField isRequired name="name">
                 <Label>Full Name</Label>
                 <Input placeholder="John Doe" />
                 <FieldError />
               </TextField>
 
-              {/* EMAIL */}
               <TextField isRequired name="email" type="email">
                 <Label>Email</Label>
                 <Input placeholder="john@example.com" />
                 <FieldError />
               </TextField>
 
-              {/* PHOTO */}
               <TextField name="photo">
                 <Label>Photo URL (optional)</Label>
                 <Input placeholder="https://image-link.com" />
                 <FieldError />
               </TextField>
 
-              {/* PASSWORD */}
               <TextField isRequired name="password" type="password">
                 <Label>Password</Label>
                 <Input placeholder="••••••••" />
                 <FieldError />
               </TextField>
 
-              {/* BUTTON */}
               <Button
                 type="submit"
                 className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3"
@@ -130,7 +121,6 @@ const RegisterPage = () => {
               </Button>
             </form>
 
-            {/* LOGIN LINK */}
             <p className="text-center text-sm text-gray-500">
               Already have an account?{' '}
               <span

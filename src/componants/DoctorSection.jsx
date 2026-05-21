@@ -5,7 +5,6 @@ const DoctorSection = () => {
   return (
     <div className="bg-sky-50 py-16">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        
         <div className="flex justify-center">
           <Image
             src={doctorImg2}
@@ -16,7 +15,6 @@ const DoctorSection = () => {
           />
         </div>
 
-       
         <div>
           <p className="text-sky-500 font-semibold mb-3">
             About Our Healthcare

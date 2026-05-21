@@ -5,7 +5,6 @@ const Banner = () => {
   return (
     <div className="container mx-auto px-4 py-10 md:py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-        {/* Left Content */}
         <div>
           <p className="text-sky-500 font-semibold mb-3">
             Trusted Healthcare Service
@@ -32,7 +31,6 @@ const Banner = () => {
             </button>
           </div>
 
-          {/* Small Info */}
           <div className="flex gap-8 mt-10">
             <div>
               <h2 className="text-2xl font-bold text-slate-800">500+</h2>
@@ -51,7 +49,6 @@ const Banner = () => {
           </div>
         </div>
 
-        {/* Right Image */}
         <div className="flex justify-center">
           <div className="bg-sky-100 p-6 rounded-full">
             <Image
