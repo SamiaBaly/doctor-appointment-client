@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import logo from '../assets/logo.png';
 import Link from 'next/link';
-import { Button } from '@heroui/react';
+import { Avatar, Button } from '@heroui/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
@@ -73,13 +73,13 @@ const Navbar = () => {
             {user ? (
               <>
                 <h2 className="text-xl font-bold mr-2">{user?.name}</h2>
-                <Image
-                  src={user?.image || '/avatar.png'}
-                  width={50}
-                  height={20}
-                  className="rounded-full h-12 w-12"
-                  alt="user"
-                />
+                <Avatar>
+                  <Avatar.Image
+                    alt="John Doe"
+                    src={user?.image}
+                  />
+                  <Avatar.Fallback>{ user?.name.charAt(0)}</Avatar.Fallback>
+                </Avatar>
 
                 <Button
                   onClick={handleLogout}

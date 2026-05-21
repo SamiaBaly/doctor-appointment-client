@@ -5,34 +5,6 @@ import { headers } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// ✅ Metadata (must be outside component)
-export async function generateMetadata({ params }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/appointments/${params.id}`,
-    { cache: 'no-store' },
-  );
-
-  const doctor = await res.json();
-
-  if (!doctor) {
-    return {
-      title: 'Doctor Not Found',
-      description: 'Requested doctor details not found',
-    };
-  }
-
-  return {
-    title: `${doctor.name} | Doctor Details`,
-    description: doctor.description,
-    openGraph: {
-      title: doctor.name,
-      description: doctor.description,
-      images: [doctor.image],
-    },
-  };
-}
-
-// ✅ Page Component
 const DoctorDetailsPage = async ({ params }) => {
   const { id } = params;
 
@@ -60,13 +32,19 @@ const DoctorDetailsPage = async ({ params }) => {
     );
   }
 
+  // ✅ SAFE IMAGE FIX (IMPORTANT)
+  const imageUrl =
+    typeof doctor?.image === 'string' && doctor.image.trim() !== ''
+      ? doctor.image
+      : '/avatar.png';
+
   return (
     <div className="container mx-auto px-4 py-10">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
         <div className="relative rounded-2xl overflow-hidden shadow-lg">
           <Image
-            src={doctor.image}
-            alt={doctor.name}
+            src={imageUrl}
+            alt={doctor?.name || 'Doctor'}
             width={600}
             height={600}
             className="w-full h-[500px] object-cover"
