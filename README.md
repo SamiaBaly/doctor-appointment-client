@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📚 Doctor Appointment App (Client)
 
-## Getting Started
+A modern doctor appointment booking frontend built with Next.js, Tailwind CSS, and HeroUI.
 
-First, run the development server:
+## Features
+
+- View doctors list
+- Book appointments via modal
+- Authentication support
+- Form validation
+- Smooth UI with animations
+- Fully responsive design
+
+## Tech Stack
+
+- Next.js
+- React
+- Tailwind CSS
+- HeroUI
+- Framer Motion
+- React Hot Toast
+
+## Project Structure
+
+```app/
+components/
+lib/
+assets/
+```
+## ⚙️ Installation
 
 ```bash
+git clone https://github.com/SamiaBaly/doctor-appointment-client
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
+## 🌐Live Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 👉 https://doctor-appointment-client-sigma.vercel.app/
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🧪 Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Open http://localhost:3000
+- Browse and search doctor
+- View doctor details
+- Login to appointment doctor
+- 
+## 📸 Screenshots
 
-## Learn More
+### Home Page
+![Home Page](./public/screenshots/scrs-1.jpg)
 
-To learn more about Next.js, take a look at the following resources:
+### login
+![Login page](./public/screenshots/scrs-2.jpg)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Register
+![Login page](./public/screenshots/scrs-3.jpg)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📌 Future Improvements
 
-## Deploy on Vercel
+- ⭐ Doctor ratings & apooinments
+- 📊 user dashboard
+- 📅 Appointment history tracking
+- 🔔 Notifications system
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👨‍💻 Author
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Developed by **Samia Baly**
